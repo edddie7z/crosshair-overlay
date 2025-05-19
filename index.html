@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Crosshair AimLock</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- Reticle elements -->
+    <div class="reticle-container">
+      <!-- Dot reticle -->
+      <div id="reticleDot"></div>
+
+      <!-- Cross reticle -->
+      <div id="reticleCross">
+        <div class="cross-line" id="crossTop"></div>
+        <div class="cross-line" id="crossRight"></div>
+        <div class="cross-line" id="crossBottom"></div>
+        <div class="cross-line" id="crossLeft"></div>
+      </div>
+    </div>
+
+    <!-- Mini Control Bar -->
+    <div id="miniControlBar" class="mini-control-bar top-right">
+      <button id="toggleMenuButton" class="mini-button" title="Toggle Menu">
+        ☰
+      </button>
+      <button id="closeAppButton" class="mini-button" title="Close Application">
+        ✕
+      </button>
+    </div>
+    <!-- Controls Panel -->
+    <div id="controlsPanel">
+      <div class="panel-header">
+        <div class="drag-handle" id="controlsPanelHandle">⋮⋮⋮</div>
+        <h3>Crosshair Settings</h3>
+      </div>
+
+      <div class="control-group">
+        <label for="reticleType">Reticle Type:</label>
+        <select id="reticleType">
+          <option value="dot">Dot</option>
+          <option value="cross">Cross</option>
+        </select>
+      </div>
+
+      <div class="control-group">
+        <label for="reticleColor">Color:</label>
+        <input type="color" id="reticleColor" value="#00ff00" />
+      </div>
+
+      <div class="control-group">
+        <label for="reticleOpacity"
+          >Opacity: <span id="opacityValue">1.0</span></label
+        >
+        <input
+          type="range"
+          id="reticleOpacity"
+          min="0.1"
+          max="1.0"
+          step="0.1"
+          value="1.0"
+        />
+      </div>
+
+      <!-- Dot-specific settings -->
+      <div class="reticle-settings dot-settings">
+        <div class="control-group">
+          <label for="dotSize"
+            >Dot Size: <span id="dotSizeValue">10</span>px</label
+          >
+          <input type="range" id="dotSize" min="1" max="50" value="10" />
+        </div>
+      </div>
+      <!-- Cross-specific settings -->
+      <div class="reticle-settings cross-settings hidden">
+        <div class="control-group">
+          <label for="crossLength"
+            >Length: <span id="crossLengthValue">15</span>px</label
+          >
+          <input type="range" id="crossLength" min="5" max="50" value="15" />
+        </div>
+
+        <div class="control-group">
+          <label for="crossThickness"
+            >Thickness: <span id="crossThicknessValue">2</span>px</label
+          >
+          <input type="range" id="crossThickness" min="1" max="10" value="2" />
+        </div>
+
+        <div class="control-group">
+          <label for="crossGap">Gap: <span id="crossGapValue">5</span>px</label>
+          <input type="range" id="crossGap" min="0" max="30" value="5" />
+        </div>
+      </div>
+      <!-- Position adjustment settings -->
+      <div class="position-settings">
+        <h4>Position Adjustment</h4>
+        <div class="control-group">
+          <label for="offsetX"
+            >X Offset: <span id="offsetXValue">0</span>px</label
+          >
+          <input type="range" id="offsetX" min="-50" max="50" value="0" />
+        </div>
+
+        <div class="control-group">
+          <label for="offsetY"
+            >Y Offset: <span id="offsetYValue">0</span>px</label
+          >
+          <input type="range" id="offsetY" min="-50" max="50" value="0" />
+        </div>
+      </div>
+      <!-- Mini Controls Bar Settings -->
+      <div class="mini-controls-settings">
+        <h4>Mini Controls Bar</h4>
+        <div class="control-group">
+          <label for="barPosition">Position:</label>
+          <select id="barPosition">
+            <option value="top-right">Top Right</option>
+            <option value="top-left">Top Left</option>
+            <option value="bottom-right">Bottom Right</option>
+            <option value="bottom-left">Bottom Left</option>
+            <option value="custom">Custom Position</option>
+          </select>
+        </div>
+
+        <div class="control-group">
+          <label for="barOpacity"
+            >Opacity: <span id="barOpacityValue">0.5</span></label
+          >
+          <input
+            type="range"
+            id="barOpacity"
+            min="0.1"
+            max="1.0"
+            step="0.1"
+            value="0.5"
+          />
+        </div>
+
+        <div class="control-group">
+          <button id="toggleDragModeButton" class="secondary-button">
+            Enable Drag Mode
+          </button>
+          <p class="info-text small">
+            In drag mode, you can reposition the mini controls by dragging them.
+          </p>
+        </div>
+      </div>
+      <div class="button-group">
+        <button id="toggleControlsButton">
+          Hide Controls & Enable Click-Through
+        </button>
+        <button id="saveConfigButton">Save Configuration</button>
+        <button id="shortcutToggleButton" class="secondary-button">
+          Toggle Keyboard Shortcuts
+        </button>
+      </div>
+
+      <div class="shortcuts-info">
+        <h4>Keyboard Shortcuts</h4>
+        <ul>
+          <li><strong>Alt+C</strong>: Toggle Controls</li>
+          <li><strong>Alt+S</strong>: Toggle Keyboard Shortcuts</li>
+        </ul>
+      </div>
+
+      <p class="info-text">
+        When controls are hidden, mouse clicks pass to the game.
+      </p>
+    </div>
+
+    <script src="renderer.js"></script>
+  </body>
+</html>

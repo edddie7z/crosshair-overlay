@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mini Controls</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: transparent;
+        overflow: hidden;
+        user-select: none;
+      }
+      .mini-control-bar {
+        position: fixed;
+        display: flex;
+        background-color: rgba(
+          30,
+          30,
+          30,
+          0.85
+        ); /* Slightly darker background for better visibility */
+        border-radius: 5px;
+        padding: 3px;
+        gap: 3px;
+        transition: opacity 0.3s ease;
+        cursor: default;
+        /* Add a subtle border */
+        border: 1px solid rgba(80, 80, 80, 0.5);
+        /* Add a subtle shadow for better visibility */
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+      }
+
+      .mini-control-bar:hover {
+        opacity: 1 !important;
+        /* Slightly enlarge on hover for better usability */
+        transform: scale(1.05);
+      }
+      .mini-button {
+        width: 26px;
+        height: 26px;
+        padding: 0;
+        background-color: transparent;
+        color: #fff; /* Brighter color for better visibility */
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 16px;
+        transition: all 0.2s ease;
+        /* Add a subtle highlight */
+        text-shadow: 0 0 3px rgba(255, 255, 255, 0.3);
+      }
+
+      .mini-button:hover {
+        background-color: rgba(100, 100, 100, 0.8);
+        color: white;
+        transform: scale(1.1); /* Slightly enlarge button on hover */
+      }
+
+      #closeAppButton:hover {
+        background-color: rgba(200, 50, 50, 0.8);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="mini-control-bar">
+      <button id="toggleMenuButton" class="mini-button" title="Toggle Menu">
+        ☰
+      </button>
+      <button id="closeAppButton" class="mini-button" title="Close Application">
+        ✕
+      </button>
+    </div>
+    <script>
+      const { ipcRenderer } = require("electron");
+
+      // Track button click state to prevent double clicking
+      let isProcessingClick = false;
+
+      // Add event listeners once the DOM is ready
+      document.addEventListener("DOMContentLoaded", () => {
+        console.log("Overlay window loaded, setting up button handlers");
+
+        // Handle toggle menu button click
+        document
+          .getElementById("toggleMenuButton")
+          .addEventListener("click", (e) => {
+            if (isProcessingClick) {
+              console.log("Click already being processed, ignoring");
+              return;
+            }
+
+            isProcessingClick = true;
+            console.log("Toggle menu button clicked in overlay");
+            e.preventDefault();
+            e.stopPropagation();
+
+            try {
+              ipcRenderer.send("toggle-controls");
+            } catch (error) {
+              console.error("Error sending toggle-controls message:", error);
+            }
+
+            // Reset processing state after a short delay
+            setTimeout(() => {
+              isProcessingClick = false;
+            }, 500); // Prevent clicking again for 500ms
+          });
+
+        // Handle close app button click
+        document
+          .getElementById("closeAppButton")
+          .addEventListener("click", (e) => {
+            if (isProcessingClick) return;
+
+            isProcessingClick = true;
+            console.log("Close app button clicked in overlay");
+            e.preventDefault();
+            e.stopPropagation();
+
+            try {
+              ipcRenderer.send("close-app");
+            } catch (error) {
+              console.error("Error sending close-app message:", error);
+            }
+
+            setTimeout(() => {
+              isProcessingClick = false;
+            }, 500);
+          });
+      });
+
+      // Handle position updates from main process
+      ipcRenderer.on("update-position", (event, data) => {
+        try {
+          const bar = document.querySelector(".mini-control-bar");
+          if (bar) {
+            bar.style.top = data.y + "px";
+            bar.style.left = data.x + "px";
+            bar.style.opacity = data.opacity;
+            console.log("Overlay position updated:", data);
+          }
+        } catch (error) {
+          console.error("Error updating overlay position:", error);
+        }
+      });
+    </script>
+  </body>
+</html>

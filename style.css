@@ -1,0 +1,365 @@
+/* Global styles */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  background-color: transparent !important;
+  overflow: hidden;
+  font-family: Arial, sans-serif;
+  color: #ffffff;
+  user-select: none;
+}
+
+/* Ensure reticle is visible in click-through mode */
+body.click-through-enabled .reticle-container {
+  display: flex !important;
+  pointer-events: none !important;
+}
+
+/* Click-through mode indicator */
+body.click-through-enabled .mini-control-bar {
+  box-shadow: 0 0 0 2px rgba(50, 250, 50, 0.7);
+}
+
+/* Mini Control Bar */
+.mini-control-bar {
+  position: fixed;
+  display: flex;
+  background-color: rgba(30, 30, 30, 0.7);
+  border-radius: 5px;
+  z-index: 2000;
+  padding: 3px;
+  gap: 3px;
+  transition: opacity 0.3s ease;
+  cursor: default;
+  pointer-events: auto !important; /* Ensure clicks are always captured */
+}
+
+.mini-control-bar:hover {
+  opacity: 1 !important;
+}
+
+.mini-control-bar.draggable {
+  cursor: move;
+  box-shadow: 0 0 0 2px rgba(50, 150, 255, 0.8);
+  background-color: rgba(40, 40, 60, 0.8);
+}
+
+.mini-button {
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  background-color: transparent;
+  color: #ddd;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer !important; /* Force cursor to be pointer */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+  transition: background-color 0.2s;
+  pointer-events: auto !important; /* Ensure clicks are always captured */
+}
+
+.mini-button:hover {
+  background-color: rgba(80, 80, 80, 0.8);
+  color: white;
+}
+
+#closeAppButton:hover {
+  background-color: rgba(200, 50, 50, 0.8);
+}
+
+/* Position classes for the mini control bar */
+.top-right {
+  top: 10px;
+  right: 10px;
+}
+
+.top-left {
+  top: 10px;
+  left: 10px;
+}
+
+.bottom-right {
+  bottom: 10px;
+  right: 10px;
+}
+
+.bottom-left {
+  bottom: 10px;
+  left: 10px;
+}
+
+/* Reticle container - centers the reticle */
+.reticle-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Dot reticle */
+#reticleDot {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background-color: #00ff00;
+  border-radius: 50%;
+}
+
+/* Cross reticle */
+#reticleCross {
+  position: absolute;
+  width: 0;
+  height: 0;
+  display: none; /* Hidden by default */
+}
+
+/* Cross lines (top, right, bottom, left) */
+.cross-line {
+  position: absolute;
+  background-color: #00ff00;
+}
+
+#crossTop {
+  width: 2px;
+  height: 15px;
+  left: -1px;
+  top: -20px;
+}
+
+#crossRight {
+  height: 2px;
+  width: 15px;
+  top: -1px;
+  left: 5px;
+}
+
+#crossBottom {
+  width: 2px;
+  height: 15px;
+  left: -1px;
+  top: 5px;
+}
+
+#crossLeft {
+  height: 2px;
+  width: 15px;
+  top: -1px;
+  left: -20px;
+}
+
+/* Controls panel */
+#controlsPanel {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 280px;
+  background-color: rgba(30, 30, 30, 0.85);
+  border-radius: 8px;
+  padding: 15px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+.control-group {
+  margin-bottom: 12px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+select,
+input[type="color"] {
+  width: 100%;
+  padding: 5px;
+  background-color: #333;
+  color: white;
+  border: 1px solid #555;
+  border-radius: 4px;
+}
+
+input[type="range"] {
+  width: 100%;
+  background-color: #333;
+}
+
+.button-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 15px;
+}
+
+button {
+  padding: 8px 12px;
+  background-color: #446;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+button:hover {
+  background-color: #557;
+}
+
+.secondary-button {
+  background-color: #375;
+}
+
+.secondary-button:hover {
+  background-color: #486;
+}
+
+.secondary-button.active {
+  background-color: #a53;
+}
+
+.secondary-button.active:hover {
+  background-color: #c64;
+}
+
+.info-text.small {
+  font-size: 11px;
+  margin-top: 4px;
+}
+
+h3 {
+  margin-top: 0;
+  text-align: center;
+}
+
+.info-text,
+.shortcut-info {
+  font-size: 12px;
+  text-align: center;
+  color: #aaa;
+  margin-top: 10px;
+  margin-bottom: 0;
+}
+
+.shortcut-info {
+  font-style: italic;
+  color: #88a;
+}
+
+.reticle-settings {
+  margin-top: 10px;
+}
+
+#saveConfigButton {
+  background-color: #464;
+}
+
+#saveConfigButton:hover {
+  background-color: #575;
+}
+
+/* Save notification styling */
+.save-notification {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: rgba(70, 70, 70, 0.9);
+  color: #fff;
+  padding: 10px 15px;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  z-index: 9999;
+  animation: fadeInOut 2s ease-in-out;
+  border-left: 4px solid #4c4;
+}
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  10% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.hidden {
+  display: none;
+}
+
+/* Panel header with drag handle */
+.panel-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+  cursor: default;
+  position: relative;
+}
+
+.drag-handle {
+  cursor: move;
+  padding: 5px 8px;
+  font-size: 14px;
+  color: #888;
+  margin-right: 8px;
+  border-radius: 4px;
+  background-color: rgba(60, 60, 60, 0.5);
+  transition: all 0.2s ease;
+}
+
+.drag-handle:hover {
+  color: #fff;
+  background-color: rgba(80, 80, 80, 0.8);
+}
+
+/* Add an active state for the draggable controls panel */
+#controlsPanel.draggable {
+  cursor: move;
+  box-shadow: 0 0 0 2px rgba(50, 150, 255, 0.8);
+}
+
+/* Keyboard shortcuts info section */
+.shortcuts-info {
+  margin-top: 15px;
+  padding: 10px;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+}
+
+.shortcuts-info h4 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  color: #ddd;
+  font-size: 14px;
+  text-align: center;
+}
+
+.shortcuts-info ul {
+  list-style-type: none;
+  padding-left: 10px;
+  margin: 0;
+}
+
+.shortcuts-info li {
+  margin-bottom: 5px;
+  color: #bbb;
+  font-size: 12px;
+}
