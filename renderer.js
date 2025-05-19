@@ -341,16 +341,16 @@ function setupEventListeners() {
   }
 
   // Drag mode toggle
-  toggleDragModeButton.addEventListener("click", toggleDragMode);  // Keyboard shortcuts toggle switch
+  toggleDragModeButton.addEventListener("click", toggleDragMode); // Keyboard shortcuts toggle switch
   const shortcutsEnabledToggle = document.getElementById("shortcutsEnabled");
   if (shortcutsEnabledToggle) {
     // Set initial state of the checkbox to match current state
     shortcutsEnabledToggle.checked = keyboardShortcutsEnabled;
-    
+
     shortcutsEnabledToggle.addEventListener("change", function () {
       // Update the state based on checkbox and handle keyboard shortcuts
       keyboardShortcutsEnabled = this.checked;
-      
+
       if (keyboardShortcutsEnabled) {
         // Re-enable keyboard shortcuts
         document.addEventListener("keydown", handleKeyboardShortcuts);
@@ -780,7 +780,7 @@ function toggleKeyboardShortcuts() {
   if (shortcutsEnabledToggle) {
     // Update the checkbox to match the current state
     shortcutsEnabledToggle.checked = keyboardShortcutsEnabled;
-    
+
     // Trigger the "change" event to ensure consistent behavior
     const event = new Event("change");
     shortcutsEnabledToggle.dispatchEvent(event);
