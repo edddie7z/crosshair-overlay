@@ -87,6 +87,9 @@ window.addEventListener("DOMContentLoaded", () => {
   // Set up keyboard shortcuts
   setupKeyboardShortcuts();
 
+  // Set up collapsible sections
+  setupCollapsibleSections();
+
   // Set up window resize listener
   window.addEventListener("resize", handleWindowResize);
 
@@ -206,14 +209,9 @@ function handleKeyboardShortcuts(e) {
   // Only respond to shortcuts if they're enabled
   if (!keyboardShortcutsEnabled) return;
 
-  // Alt+C to toggle controls
-  if (e.altKey && e.key === "c") {
+  // Alt+H to hide/unhide menu
+  if (e.altKey && e.key === "h") {
     toggleControls();
-  }
-
-  // Alt+S to toggle keyboard shortcuts
-  if (e.altKey && e.key === "s") {
-    toggleKeyboardShortcuts();
   }
 }
 
@@ -343,12 +341,26 @@ function setupEventListeners() {
   }
 
   // Drag mode toggle
-  toggleDragModeButton.addEventListener("click", toggleDragMode);
-
-  // Keyboard shortcuts toggle button
-  const shortcutToggleButton = document.getElementById("shortcutToggleButton");
-  if (shortcutToggleButton) {
-    shortcutToggleButton.addEventListener("click", toggleKeyboardShortcuts);
+  toggleDragModeButton.addEventListener("click", toggleDragMode);  // Keyboard shortcuts toggle switch
+  const shortcutsEnabledToggle = document.getElementById("shortcutsEnabled");
+  if (shortcutsEnabledToggle) {
+    // Set initial state of the checkbox to match current state
+    shortcutsEnabledToggle.checked = keyboardShortcutsEnabled;
+    
+    shortcutsEnabledToggle.addEventListener("change", function () {
+      // Update the state based on checkbox and handle keyboard shortcuts
+      keyboardShortcutsEnabled = this.checked;
+      
+      if (keyboardShortcutsEnabled) {
+        // Re-enable keyboard shortcuts
+        document.addEventListener("keydown", handleKeyboardShortcuts);
+        console.log("Keyboard shortcuts enabled");
+      } else {
+        // Disable keyboard shortcuts
+        document.removeEventListener("keydown", handleKeyboardShortcuts);
+        console.log("Keyboard shortcuts disabled");
+      }
+    });
   }
 
   // Panel dragging
@@ -763,16 +775,75 @@ let keyboardShortcutsEnabled = true;
 // Implementation of keyboard shortcuts toggle
 function toggleKeyboardShortcuts() {
   keyboardShortcutsEnabled = !keyboardShortcutsEnabled;
-  const shortcutToggleButton = document.getElementById("shortcutToggleButton");
+  const shortcutsEnabledToggle = document.getElementById("shortcutsEnabled");
 
-  if (keyboardShortcutsEnabled) {
-    shortcutToggleButton.textContent = "Disable Keyboard Shortcuts";
-    shortcutToggleButton.classList.remove("active");
-    setupKeyboardShortcuts();
+  if (shortcutsEnabledToggle) {
+    // Update the checkbox to match the current state
+    shortcutsEnabledToggle.checked = keyboardShortcutsEnabled;
+    
+    // Trigger the "change" event to ensure consistent behavior
+    const event = new Event("change");
+    shortcutsEnabledToggle.dispatchEvent(event);
   } else {
-    shortcutToggleButton.textContent = "Enable Keyboard Shortcuts";
-    shortcutToggleButton.classList.add("active");
-    // Remove keyboard event listeners
-    document.removeEventListener("keydown", handleKeyboardShortcuts);
+    // If the toggle doesn't exist, handle the events directly
+    if (keyboardShortcutsEnabled) {
+      document.addEventListener("keydown", handleKeyboardShortcuts);
+      console.log("Keyboard shortcuts enabled via hotkey");
+    } else {
+      document.removeEventListener("keydown", handleKeyboardShortcuts);
+      console.log("Keyboard shortcuts disabled via hotkey");
+    }
   }
+}
+
+// Setup collapsible sections
+function setupCollapsibleSections() {
+  const sectionHeaders = document.querySelectorAll(".section-header");
+
+  sectionHeaders.forEach((header) => {
+    header.addEventListener("click", () => {
+      const targetId = header.getAttribute("data-target");
+      const targetContent = document.getElementById(targetId);
+      const toggleIcon = header.querySelector(".toggle-icon");
+
+      if (targetContent) {
+        targetContent.classList.toggle("collapsed");
+
+        // Update the toggle icon
+        if (toggleIcon) {
+          if (targetContent.classList.contains("collapsed")) {
+            toggleIcon.textContent = "▶";
+          } else {
+            toggleIcon.textContent = "▼";
+          }
+        }
+      }
+    });
+  });
+
+  // Initialize sections - collapse all except the first one
+  let isFirst = true;
+
+  sectionHeaders.forEach((header) => {
+    const targetId = header.getAttribute("data-target");
+    const targetContent = document.getElementById(targetId);
+    const toggleIcon = header.querySelector(".toggle-icon");
+
+    if (targetContent) {
+      if (isFirst) {
+        // Keep first section expanded
+        targetContent.classList.remove("collapsed");
+        if (toggleIcon) {
+          toggleIcon.textContent = "▼";
+        }
+        isFirst = false;
+      } else {
+        // Collapse other sections
+        targetContent.classList.add("collapsed");
+        if (toggleIcon) {
+          toggleIcon.textContent = "▶";
+        }
+      }
+    }
+  });
 }
