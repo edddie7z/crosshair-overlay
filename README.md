@@ -1,4 +1,4 @@
-# Crosshair Overlay
+# Crosshair Overlay (AimLock)
 
 A customizable desktop crosshair overlay application built with Electron that provides an always-on-top targeting reticle for gaming, design work, or any application where precision pointing is needed.
 
@@ -8,11 +8,14 @@ A customizable desktop crosshair overlay application built with Electron that pr
 - **Full Customization**: Adjust color, opacity, size, thickness, and gap
 - **Click-Through Mode**: Use your applications underneath the overlay
 - **Miniature Control Bar**: Quick access to key functions even in click-through mode
-- **Keyboard Shortcuts**: Toggle controls and features with keyboard shortcuts
 - **Position Adjustments**: Fine-tune the crosshair position with X/Y offsets
 - **Drag Controls**: Move the control panel and mini bar to your preferred position
 - **Save Configuration**: Preserve your settings between sessions
 - **Always-On-Top**: Never lose sight of your crosshair
+- **Keyboard Shortcuts**: Toggle controls with Alt+H for quick hide/show
+- **Collapsible Settings**: Organized sections for better space management
+- **Visual Notifications**: Non-blocking save confirmations
+- **Custom Bar Positioning**: Position the mini control bar anywhere on screen
 
 ## Installation
 
@@ -70,8 +73,8 @@ A customizable desktop crosshair overlay application built with Electron that pr
 
 ## Keyboard Shortcuts
 
-- **Alt+C**: Toggle controls visibility and click-through mode
-- **Alt+S**: Enable/disable keyboard shortcuts
+- **Alt+H**: Toggle controls visibility and click-through mode (same as the mini button)
+- Keyboard shortcuts can be globally enabled/disabled via the settings panel
 
 ## Development
 
@@ -88,11 +91,11 @@ This application is built with:
 
 ### Project Structure
 
-- `main.js`: Electron main process
-- `renderer.js`: UI interactions and rendering logic
-- `preload.js`: Secure bridge between renderer and main process
+- `main.js`: Electron main process managing windows
+- `renderer.js`: UI logic and event handling
+- `preload.js`: Secure IPC communication between processes
 - `index.html`: Main application UI
-- `overlay.html`: Mini control bar UI for click-through mode
+- `overlay.html`: Specialized window for mini controls in click-through mode
 - `style.css`: Application styling
 
 ## License
