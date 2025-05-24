@@ -239,8 +239,9 @@ button:hover {
 }
 
 h3 {
-  margin-top: 0;
+  margin: 0;
   text-align: center;
+  flex-grow: 1;
 }
 
 .info-text,
@@ -308,6 +309,7 @@ h3 {
 /* Panel header with drag handle */
 .panel-header {
   display: flex;
+  justify-content: center;
   align-items: center;
   margin-bottom: 12px;
   cursor: default;
@@ -319,7 +321,10 @@ h3 {
   padding: 5px 8px;
   font-size: 14px;
   color: #888;
-  margin-right: 8px;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
   border-radius: 4px;
   background-color: rgba(60, 60, 60, 0.5);
   transition: all 0.2s ease;
