@@ -1,4 +1,4 @@
-# Crosshair Overlay (AimLock)
+# Crosshair Overlay
 
 A customizable desktop crosshair overlay application built with Electron that provides an always-on-top targeting reticle for gaming, design work, or any application where precision pointing is needed.
 
